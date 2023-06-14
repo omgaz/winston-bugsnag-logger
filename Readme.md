@@ -1,5 +1,7 @@
 > This package is deprecated and a better alternative has been created, please use Cabin: https://cabinjs.com
 
+> This fork is a stop gap until such time as I can migrate to Pino / CabinJS
+
 # winston-bugsnag-logger
 
 [![node](https://img.shields.io/badge/node-4.8.4+-brightgreen.svg)][node-url]
@@ -13,19 +15,17 @@ The **maintained** and **well-documented** [Bugsnag](https://github.com/bugsnag/
 
 ## Index
 
-* [Install](#install)
-* [Usage](#usage)
-* [Options](#options-options)
+- [Install](#install)
+- [Usage](#usage)
+- [Options](#options-options)
   - [Log Level Mapping](#log-level-mapping)
-* [License](#license)
-
+- [License](#license)
 
 ## Install
 
 ```bash
 npm install --save winston winston-bugsnag-logger
 ```
-
 
 ## Usage
 
@@ -34,26 +34,24 @@ You can configure `winston-bugsnag-logger` in two different ways.
 With `new winston.Logger`:
 
 ```js
-const winston = require('winston');
-const Bugsnag = require('winston-bugsnag-logger');
+const winston = require("winston");
+const Bugsnag = require("winston-bugsnag-logger");
 
 const options = {
-  apiKey: '*******',
-  level: 'info'
+  apiKey: "*******",
+  level: "info",
 };
 
 const logger = new winston.Logger({
-  transports: [
-    new Bugsnag(options)
-  ]
+  transports: [new Bugsnag(options)],
 });
 ```
 
 Or with winston's `add` method:
 
 ```js
-const winston = require('winston');
-const Bugsnag = require('winston-bugsnag-logger');
+const winston = require("winston");
+const Bugsnag = require("winston-bugsnag-logger");
 
 const logger = new winston.Logger();
 
@@ -62,23 +60,22 @@ logger.add(Bugsnag, options);
 
 See [Options](#options-options) below for custom configuration.
 
-
 ## Options (`options`)
 
 Per `options` variable above, here are the default options provided:
 
 Default options:
 
-* `apiKey` (String) - your Bugsnag API key (defaults to `process.env.BUGSNAG_API_KEY`)
-* `config` (Object) - a Bugsnag configuration object
-* `bugsnag` (Object) - an optional instance of `bugsnag` that is already configured via `bugsnag.register` (if provided this will be used instead of the `config` option)
+- `apiKey` (String) - your Bugsnag API key (defaults to `process.env.BUGSNAG_API_KEY`)
+- `config` (Object) - a Bugsnag configuration object
+- `bugsnag` (Object) - an optional instance of `bugsnag` that is already configured via `bugsnag.register` (if provided this will be used instead of the `config` option)
 
 Transport related options:
 
-* `name` (String) - transport's name (defaults to `bugsnag`)
-* `silent` (Boolean) - suppress logging (defaults to `false`)
-* `level` (String) - transport's level of messages to log (defaults to `info`)
-* `levelsMap` (Object) - log level mapping to Bugsnag (see [Log Level Mapping](#log-level-mapping) below)
+- `name` (String) - transport's name (defaults to `bugsnag`)
+- `silent` (Boolean) - suppress logging (defaults to `false`)
+- `level` (String) - transport's level of messages to log (defaults to `info`)
+- `levelsMap` (Object) - log level mapping to Bugsnag (see [Log Level Mapping](#log-level-mapping) below)
 
 ### Log Level Mapping
 
@@ -102,18 +99,16 @@ You can customize how log levels are mapped using the `levelsMap` option:
 ```js
 new Bugsnag({
   levelsMap: {
-    verbose: 'info'
-  }
+    verbose: "info",
+  },
 });
 ```
 
 If no log level mapping was found for the given `level` passed, then it will not log anything.
 
-
 ## License
 
 [MIT License][license-url]
-
 
 [license-url]: LICENSE
 [node-url]: https://nodejs.org

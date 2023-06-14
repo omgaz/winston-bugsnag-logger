@@ -1,6 +1,6 @@
 
 const _ = require('lodash');
-const bugsnag = require('bugsnag');
+const bugsnag = require('@bugsnag/js');
 const winston = require('winston');
 const util = require('util');
 
@@ -37,7 +37,7 @@ function BugsnagLogger(options) {
     this.bugsnag = options.bugsnag;
   } else {
     this.bugsnag = bugsnag;
-    this.bugsnag.register(options.apiKey, options.config);
+    this.bugsnag.register({ apiKey: options.apiKey, ...options.config });
   }
 
 };
