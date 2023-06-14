@@ -37,7 +37,7 @@ function BugsnagLogger(options) {
     this.bugsnag = options.bugsnag;
   } else {
     this.bugsnag = bugsnag;
-    this.bugsnag.register({ apiKey: options.apiKey, ...options.config });
+    this.bugsnag({ apiKey: options.apiKey, ...options.config });
   }
 
 };

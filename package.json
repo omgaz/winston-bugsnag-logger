@@ -1,5 +1,5 @@
 {
-  "name": "winston-bugsnag-logger",
+  "name": "@omgaz/winston-bugsnag-logger",
   "description": "The maintained and well-documented Bugsnag transport for the winston logger",
   "version": "0.0.1",
   "author": "Nick Baugh",
