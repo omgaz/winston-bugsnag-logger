@@ -34,10 +34,9 @@ function BugsnagLogger(options) {
 
   // expose the instance on the transport
   if (options.bugsnag) {
-    this.bugsnag = options.bugsnag;
+    this.bugsnagClient = options.bugsnag;
   } else {
-    this.bugsnag = bugsnag;
-    this.bugsnag({ apiKey: options.apiKey, ...options.config });
+    this.bugsnagClient = bugsnag({ apiKey: options.apiKey, ...options.config });
   }
 
 };
@@ -75,7 +74,7 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
       msg = meta.message;
   }
 
-  this.bugsnag.notify(msg, meta, function() {
+  this.bugsnagClient.notify(msg, meta, function() {
     fn(null, true);
   });
 
