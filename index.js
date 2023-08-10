@@ -1,4 +1,3 @@
-
 const _ = require('lodash');
 const bugsnag = require('@bugsnag/js');
 const winston = require('winston');
@@ -56,6 +55,22 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
   meta = meta || {};
   meta.severity = this._levelsMap[level];
   meta.metaData = meta.metaData || {};
+  error = meta.error || {};
+  const omittedCustomErrorFields = ['stack', 'message', 'name'];
+
+  // Custom fields now seem to vanish in Bugsnag Error tab, so we'll add them to custom; useful for GraphQL errors
+  customErrorFields = _.remove(Object.getOwnPropertyNames(error), function(item) {
+    !_.includes(omittedCustomErrorFields, item)
+  });
+
+  // merge all metadata into a single metaData object
+  const newMeta = {
+    metaData: {
+      ..._.omit(meta, ['metaData', 'severity']),
+      ...{ metadata: _.assign({}, meta.metaData, meta.metadata) },
+      ...{ custom: _.assign({}, meta.custom, _.pick(error, customErrorFields)) },
+    },
+  };
 
   //
   // TODO: this is currently unknown and poorly documented by Bugsnag
@@ -63,21 +78,21 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
   // <insert facepalm here>
   //
 
-  if (_.isError(msg) && !_.isObject(meta.metaData.err)) {
-    meta.metaData.err = { stack: msg.stack, message: msg.message };
+  if (_.isError(msg) && !_.isObject(newMeta.metaData.err)) {
+    newMeta.metaData.err = { stack: msg.stack, message: msg.message };
     msg = msg.message;
   }
 
-  if (_.isError(meta) && !_.isObject(meta.metaData.err)) {
-    meta.metaData.err = { stack: meta.stack, message: meta.message };
-    if (!_.isString(msg))
-      msg = meta.message;
+  if (_.isError(meta) && !_.isObject(newMeta.metaData.err)) {
+    newMeta.metaData.err = { stack: newMeta.stack, message: newMeta.message };
+    if (!_.isString(msg)) {
+      msg = newMeta.message;
+    }
   }
 
-  this.bugsnagClient.notify(msg, meta, function() {
+  this.bugsnagClient.notify(msg, newMeta, function () {
     fn(null, true);
   });
-
-}
+};
 
 module.exports = BugsnagLogger;
