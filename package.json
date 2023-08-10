@@ -1,7 +1,7 @@
 {
   "name": "@omgaz/winston-bugsnag-logger",
   "description": "The maintained and well-documented Bugsnag transport for the winston logger",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Nick Baugh",
   "bugs": {
     "url": "https://github.com/omgaz/winston-bugsnag-logger/issues"
