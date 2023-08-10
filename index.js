@@ -60,7 +60,7 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
 
   // Custom fields now seem to vanish in Bugsnag Error tab, so we'll add them to custom; useful for GraphQL errors
   customErrorFields = _.remove(Object.getOwnPropertyNames(error), function(item) {
-    !_.includes(omittedCustomErrorFields, item)
+    return !_.includes(omittedCustomErrorFields, item);
   });
 
   // merge all metadata into a single metaData object
@@ -68,8 +68,8 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
     metaData: {
       ..._.omit(meta, ['metaData']),
       ...{ metadata: _.assign({}, meta.metaData, meta.metadata) },
-      ...{ custom: _.assign({}, meta.custom, _.pick(error, customErrorFields)) },
-    },
+      ...{ custom: _.assign({}, meta.custom, _.pick(error, customErrorFields)) }
+    }
   };
 
   //
