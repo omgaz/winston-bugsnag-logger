@@ -66,7 +66,7 @@ BugsnagLogger.prototype.log = function(level, msg, meta, fn) {
   // merge all metadata into a single metaData object
   const newMeta = {
     metaData: {
-      ..._.omit(meta, ['metaData', 'severity']),
+      ..._.omit(meta, ['metaData']),
       ...{ metadata: _.assign({}, meta.metaData, meta.metadata) },
       ...{ custom: _.assign({}, meta.custom, _.pick(error, customErrorFields)) },
     },
