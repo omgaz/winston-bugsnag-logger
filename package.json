@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@bugsnag/js": "6.5.2",
-    "lodash": "4.17.21"
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
     "winston": "2.4.1"
